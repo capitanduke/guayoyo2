@@ -16,7 +16,7 @@ export const Container = styled(animated.div)`
   height: 100%;
   margin: 0;
   padding: 0;
-  background: #191b21;
+  background: #282c34;
   overflow: hidden;
   font-family: ui-monospace, monospace;
   font-size: 14px;
@@ -37,8 +37,8 @@ export const Frame = styled('div')`
   white-space: nowrap;
   overflow-x: hidden;
   vertical-align: middle;
-  color: #24292e;
-  fill: #24292e;
+  color: #fff;
+  fill: #fff;
 `
 
 export const Title = styled('span')`
@@ -113,9 +113,9 @@ const Wrapper = () => {
   const [isOpen2, setOpen2] = useState(false)
 
   const { backgroundColor } = useSpring({
-    from: { backgroundColor: 'black' },
+    from: { backgroundColor: '#282c34' },
     to: {
-      backgroundColor: isOpen2 ? 'red' : 'black',
+      backgroundColor: isOpen2 ? 'red' : '#282c34',
     },
   })
 
