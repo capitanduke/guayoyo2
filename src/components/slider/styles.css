@@ -158,7 +158,26 @@ snap-tabs > section > article {
   transform-origin: left;
 }
 
+.item-line2 {
+  width: 5px;
+  height: 20rem;
+  background-color: transparent;
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.item-line2 .progress2 {
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0, 0, 0);
+  border-radius: 1px;
+  transform: scale3d(1, 0, 1);
+  transform-origin: left;
+}
+
 .header-snap-tabs {
+  display: flex;
+  justify-content: center;
   width: 100%;
 }
 
@@ -221,71 +240,3 @@ snap-tabs > section > article {
   grid-area: 1 / 1 / 2 / 5;
   overflow: hidden;
 }*/
-
-@keyframes progres {
-  0% {
-    width: 0%;
-  }
-  25% {
-    width: 25%;
-  }
-  50% {
-    width: 50%;
-  }
-  75% {
-    width: 75%;
-  }
-  100% {
-    width: 100%;
-  }
-}
-
-.slider-text-container {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: auto;
-}
-
-.slider-title {
-  font-size: 50px;
-  line-height: 0.8;
-}
-
-.slider-text {
-  font-size: 150px;
-  line-height: 1;
-}
-
-.footer-logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.alle-themen {
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.plus-button {
-  display: flex;
-  justify-content: center;
-  transform: translateY(-3rem);
-}
-
-.plus-icon {
-  height: 40%;
-  width: auto;
-}
-
-.portfolio {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-}

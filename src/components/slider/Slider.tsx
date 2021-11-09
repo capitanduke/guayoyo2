@@ -1,10 +1,8 @@
 import './styles.css'
 import React, { useEffect, useRef, useState } from 'react'
 import images from '../../data'
-//import { useHistory, useParams } from 'react-router-dom'
-//import { useQuery } from 'react-query'
-//import * as api from "../../CockData";
 import styled from 'styled-components'
+import { device } from '../UI/breakpoints'
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -66,12 +64,11 @@ const ContainerNav = styled.nav`
   align-items: center;
   height: 10rem;
   gap: 1rem;
-  width: 100%;
+  width: 50%;
 `
 
 const ConatinerContent = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
   height: 100%;
   position: absolute;
   top: 0;
@@ -82,8 +79,20 @@ const ConatinerContent = styled.div`
 
 const BackTouch = styled.div`
   display: flex;
-  height: 100%;
   align-items: center;
+  justify-content: start;
+  position: relative;
+  left: 1rem;
+  height: 100%;
+  width: 100%;
+
+  @media ${device.laptop} {
+    left: 10rem;
+  }
+
+  & > a {
+    color: red;
+  }
 `
 
 const Forward = styled.div`
@@ -106,12 +115,9 @@ export const Slider = (): JSX.Element => {
   const scroll = useRef<HTMLDivElement>(null)
   const [index, setIndex] = useState<number>(0)
 
-  console.log(images.length)
   lengthing.current = images.length
 
   const callback = (idx: number) => {
-    console.log('index Real ->', idx)
-
     curIdx.current = idx
     // cancel current animation
     if (curAnimation.current) {
@@ -123,7 +129,7 @@ export const Slider = (): JSX.Element => {
 
     if (progress) {
       curAnimation.current = progress.animate(
-        [{ transform: 'scale3d(0, 1, 1)' }, { transform: 'scale3d(1, 1, 1)' }],
+        [{ transform: 'scale3d(1, 0, 1)' }, { transform: 'scale3d(1, 1, 1)' }],
         {
           duration: 5000,
           iterations: 1,
@@ -165,7 +171,6 @@ export const Slider = (): JSX.Element => {
       /*images.map((content, key) => {
         if (key === i) {
           //here sending index IMPORTANT
-          //console.log(content.content)
         }
       })*/
     }
@@ -216,12 +221,9 @@ export const Slider = (): JSX.Element => {
                 </ImgSnapTab>
                 <ConatinerContent>
                   <BackTouch>
-                    <a
-                      href={`#${i > 0 ? img.id - 1 : ''}`}
-                      onClick={() => callback(index)}
-                    >
-                      Move left
-                    </a>
+                    <div className="item-line2">
+                      <div id={`nav${i}`} className="progress2"></div>
+                    </div>
                   </BackTouch>
                   <ContentSwipe>Swipeing</ContentSwipe>
                   <Forward>
@@ -239,10 +241,7 @@ export const Slider = (): JSX.Element => {
   )
 }
 
-type ImageType = typeof images[0]
-
 interface SnapLinkProps {
-  //img: ImageType
   index: number
   callback: (n: number) => void
 }
@@ -251,9 +250,6 @@ export const SnapLink = ({ index, callback }: SnapLinkProps) => {
   return (
     <a className="nav-items" href={`#${index}`} onClick={() => callback(index)}>
       <span className="pl-1 text-gray-300">Topic {index}</span>
-      <div className="item-line mb-9">
-        <div id={`nav${index}`} className="progress"></div>
-      </div>
     </a>
   )
 }
