@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import images from '../../data'
 import styled from 'styled-components'
 import { device } from '../UI/breakpoints'
+import { useTrail, a } from '@react-spring/web'
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -35,13 +36,38 @@ const Container = styled.div`
   user-select: none;
 `
 
-const Imagen = styled.img`
+const ContainerHeader = styled.div`
+  display: block;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+`
+
+const NavItem = styled.a`
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-start;
+  width: 10rem;
+  flex-grow: 1;
+  text-decoration: none;
+  color: #000;
+`
+
+const Imagen = styled.div`
   width: 100%;
   height: auto;
-  object-fit: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
   position: relative;
-  top: -10rem;
-  left: 2rem;
+`
+
+const BorderImage = styled.div`
+  border: 1px solid #000;
+  width: 100%;
+  height: 100%;
 `
 
 const Inner = styled.div`
@@ -69,6 +95,7 @@ const ContainerNav = styled.nav`
 
 const ConatinerContent = styled.div`
   display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
   height: 100%;
   position: absolute;
   top: 0;
@@ -77,12 +104,12 @@ const ConatinerContent = styled.div`
   justify-items: center;
 `
 
-const BackTouch = styled.div`
+const ProgressBar = styled.div`
   display: flex;
   align-items: center;
   justify-content: start;
   position: relative;
-  left: 1rem;
+  left: 2rem;
   height: 100%;
   width: 100%;
 
@@ -101,10 +128,29 @@ const Forward = styled.div`
   align-items: center;
 `
 
-const ContentSwipe = styled.div`
+const Logo = styled.div`
   display: flex;
   height: 100%;
   align-items: center;
+`
+
+const Trailer = styled.div`
+  position: relative;
+  width: 100%;
+  height: 80px;
+  line-height: 80px;
+  color: black;
+  font-size: 6em;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  will-change: transform, opacity;
+  overflow: hidden;
+  text-align: left;
+
+  & > div {
+    padding-right: 0.05em;
+    overflow: hidden;
+  }
 `
 
 export const Slider = (): JSX.Element => {
@@ -114,6 +160,7 @@ export const Slider = (): JSX.Element => {
   const timeout = useRef<NodeJS.Timeout | null>(null)
   const scroll = useRef<HTMLDivElement>(null)
   const [index, setIndex] = useState<number>(0)
+  const [open, set] = useState(true)
 
   lengthing.current = images.length
 
@@ -143,6 +190,10 @@ export const Slider = (): JSX.Element => {
         callback(nextIdx)
       }
     }
+
+    setTimeout(function () {
+      set((state) => !state)
+    }, 1000)
   }
 
   useEffect(() => {
@@ -157,24 +208,26 @@ export const Slider = (): JSX.Element => {
     }
   }, [])
 
-  scroll.current?.addEventListener('scroll', () => {
-    if (scroll.current) {
-      const i = scroll.current.scrollLeft / scroll.current?.clientWidth
-      curAnimation.current?.cancel()
-      // cancel previous timeout
-      if (timeout.current) {
-        clearTimeout(timeout.current)
-      }
-      // sets a new timeout to continue with autoscroll
-      setIndex(Math.ceil(i))
-      timeout.current = setTimeout(() => callback(i), 100)
-      /*images.map((content, key) => {
-        if (key === i) {
-          //here sending index IMPORTANT
+  useEffect(() => {
+    scroll.current?.addEventListener('scroll', () => {
+      if (scroll.current) {
+        const i = scroll.current.scrollLeft / scroll.current?.clientWidth
+        curAnimation.current?.cancel()
+        // cancel previous timeout
+        if (timeout.current) {
+          clearTimeout(timeout.current)
         }
-      })*/
-    }
-  })
+        // sets a new timeout to continue with autoscroll
+        setIndex(Math.ceil(i))
+        timeout.current = setTimeout(() => callback(i), 100)
+        /*images.map((content, key) => {
+            if (key === i) {
+              //here sending index IMPORTANT
+            }
+          })*/
+      }
+    })
+  }, [scroll.current])
 
   return (
     <Container>
@@ -191,7 +244,7 @@ export const Slider = (): JSX.Element => {
             timeout.current = setTimeout(() => callback(curIdx.current), 20000)
           }}
         >
-          <div className="container-header">
+          <ContainerHeader>
             <header className="scroll-snap-x header-snap-tabs">
               <ContainerNav>
                 {images.map((img: any, i: number) => (
@@ -200,7 +253,7 @@ export const Slider = (): JSX.Element => {
               </ContainerNav>
               <span className="snap-indicator"></span>
             </header>
-          </div>
+          </ContainerHeader>
           <section
             ref={scroll}
             className="scroll-snap-x section-snap-tabs rounded-b-2xl "
@@ -213,19 +266,27 @@ export const Slider = (): JSX.Element => {
               >
                 <ImgSnapTab>
                   <Imagen
-                    src={img.img}
+                    style={{ backgroundImage: `url("${img.img}")` }}
                     id={`${img.id}`}
-                    alt={`${img.id}`}
                     className="object-cover w-full h-full"
-                  />
+                  >
+                    <BorderImage />
+                  </Imagen>
                 </ImgSnapTab>
                 <ConatinerContent>
-                  <BackTouch>
+                  <Logo>
+                    <Trail open={!open}>
+                      <span>Lorem</span>
+                      <span>Ipsum</span>
+                      <span>Dolor</span>
+                      <span>Sit</span>
+                    </Trail>
+                  </Logo>
+                  <ProgressBar>
                     <div className="item-line2">
                       <div id={`nav${i}`} className="progress2"></div>
                     </div>
-                  </BackTouch>
-                  <ContentSwipe>Swipeing</ContentSwipe>
+                  </ProgressBar>
                   <Forward>
                     <a href={`#${img.id + 1}`} onClick={() => callback(index)}>
                       Move Forward
@@ -248,8 +309,30 @@ interface SnapLinkProps {
 
 export const SnapLink = ({ index, callback }: SnapLinkProps) => {
   return (
-    <a className="nav-items" href={`#${index}`} onClick={() => callback(index)}>
+    <NavItem href={`#${index}`} onClick={() => callback(index)}>
       <span className="pl-1 text-gray-300">Topic {index}</span>
-    </a>
+    </NavItem>
+  )
+}
+
+const Trail: React.FC<{ open: boolean }> = ({ open, children }) => {
+  const items = React.Children.toArray(children)
+  const trail = useTrail(items.length, {
+    config: { mass: 5, tension: 2000, friction: 200 },
+    opacity: open ? 1 : 0,
+    x: open ? 0 : 20,
+    height: open ? 110 : 0,
+    from: { opacity: 0, x: 20, height: 0 },
+  })
+  return (
+    <div>
+      {trail.map(({ height, ...style }, index) => (
+        <Trailer>
+          <a.div key={index} style={style}>
+            <a.div style={{ height }}>{items[index]}</a.div>
+          </a.div>
+        </Trailer>
+      ))}
+    </div>
   )
 }
