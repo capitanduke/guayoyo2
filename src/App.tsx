@@ -1,10 +1,10 @@
 import './App.css'
-import { Menu } from './components/menu/Menu'
+import Slider from './components/Slider/Slider'
 
 function App() {
   return (
     <div className="App">
-      <Menu />
+      <Slider />
     </div>
   )
 }
