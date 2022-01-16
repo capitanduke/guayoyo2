@@ -8,11 +8,17 @@ import {
 import styled from 'styled-components'
 import SliderRight from './SliderRight'
 
-import styles from './styles.module.css'
-
 export const MainContainer = styled('div')`
   display: grid;
   width: 100%;
+  height: 100%;
+  color: white;
+  font-weight: 400;
+  font-size: 2em;
+  will-change: transform, opacity;
+  text-shadow: 0px 2px 40px #00000020, 0px 2px 5px #00000030;
+  -webkit-user-select: none;
+  user-select: none;
 `
 export const Container = styled('div')`
   display: grid;
@@ -40,23 +46,9 @@ export const Arrow = styled('div')`
 
 const Slider = () => {
   const [index, set] = useState(0)
-  const [index2, set2] = useState(-1)
-  const [show, setShow] = useState(false)
   const onClick = useCallback(() => {
     set((state) => (state + 1) % 3)
   }, [])
-  /*const onClick2 = useCallback(() => {
-    setShow(true)
-    set2(index)
-    console.log(index)
-    console.log(index2)
-  }, [])*/
-  const onClick2 = () => {
-    set2(index)
-  }
-  const close = () => {
-    set2(-1)
-  }
 
   const transRef = useSpringRef()
   const transitions = useTransition(index, {
@@ -69,10 +61,8 @@ const Slider = () => {
 
   useEffect(() => {
     transRef.start()
-    if (index === index2) {
-      transRef2.start()
-    }
-  }, [index, index2])
+    transRef2.start()
+  }, [index])
 
   const pages: ((
     props: AnimatedProps<{ style: CSSProperties }>
@@ -83,6 +73,11 @@ const Slider = () => {
           ...style,
           backgroundImage: `url(${process.env.PUBLIC_URL}/pizza.jpg)`,
           backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
         }}
       >
         <MainContainer>
@@ -103,6 +98,11 @@ const Slider = () => {
           ...style,
           backgroundImage: `url(${process.env.PUBLIC_URL}/teques.jpg)`,
           backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
         }}
       >
         <MainContainer>
@@ -123,6 +123,11 @@ const Slider = () => {
           ...style,
           backgroundImage: `url(${process.env.PUBLIC_URL}/nachos.jpg)`,
           backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
         }}
       >
         <MainContainer>
@@ -139,26 +144,6 @@ const Slider = () => {
     ),
   ]
 
-  /*const pages2: ((
-    props: AnimatedProps<{ style: CSSProperties }>
-  ) => React.ReactElement)[] = [
-    ({ style }) => (
-      <animated.div style={{ ...style, background: 'red' }}>
-        <div onClick={close}>A</div>
-      </animated.div>
-    ),
-    ({ style }) => (
-      <animated.div style={{ ...style, background: 'red' }}>
-        <div onClick={close}>B</div>
-      </animated.div>
-    ),
-    ({ style }) => (
-      <animated.div style={{ ...style, background: 'red' }}>
-        <div onClick={close}>C</div>
-      </animated.div>
-    ),
-  ]*/
-
   const transRef2 = useSpringRef()
   const transitions2 = useTransition(index, {
     ref: transRef2,
@@ -171,20 +156,19 @@ const Slider = () => {
   const [open, setOpen] = useState(true)
 
   return (
-    <div className={`flex fill ${styles.containerSlider}`}>
+    <>
       {transitions((style, i) => {
         const Page = pages[i]
         return <Page style={style} />
       })}
       {transitions2((style) => {
-        //const Page2 = pages2[index]
         return (
           <SliderRight open={open} setOpen={setOpen}>
             {index}
           </SliderRight>
         )
       })}
-    </div>
+    </>
   )
 }
 

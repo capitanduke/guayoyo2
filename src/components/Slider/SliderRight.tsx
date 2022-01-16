@@ -1,7 +1,25 @@
 import React from 'react'
 import { useTrail, a } from '@react-spring/web'
+import styled from 'styled-components'
 
-import styles from './styles.module.css'
+const Block = styled(a.div)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: 800;
+  font-size: 5em;
+  will-change: transform, opacity;
+  text-shadow: 0px 2px 40px #00000020, 0px 2px 5px #00000030;
+  -webkit-user-select: none;
+  user-select: none;
+  background-color: greenyellow;
+`
 
 const SliderRight: React.FC<{
   open: boolean
@@ -17,11 +35,11 @@ const SliderRight: React.FC<{
   return (
     <>
       {trail.map(({ ...style }, index) => (
-        <a.div key={index} className={styles.block2} style={style}>
+        <Block key={index} style={style}>
           <a.div>{children}</a.div>
           {''}
           <div onClick={() => setOpen(!open)}>X</div>
-        </a.div>
+        </Block>
       ))}
     </>
   )
