@@ -8,6 +8,7 @@ import {
 import styled from 'styled-components'
 import SliderRight from './SliderRight'
 import SliderLeft from './SliderLeft'
+import { useQuery } from 'react-query'
 
 const MainContainer = styled('div')`
   display: grid;
@@ -46,6 +47,12 @@ const Arrow = styled('div')`
 `
 
 const Slider = () => {
+  const { isLoading, error, data, isFetching } = useQuery('repoData', () =>
+    fetch('http://guayoyoapi.souminimal.com/wp-json/wp/v2/posts').then((res) =>
+      res.json()
+    )
+  )
+  console.log(data)
   const [index, set] = useState(0)
   const [open, setOpen] = useState(true)
   const [openLeft, setOpenLeft] = useState(true)

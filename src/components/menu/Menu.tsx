@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import useMeasure from 'react-use-measure'
 import { animated, useSpring, a } from '@react-spring/web'
 import * as Icons from './icons'
+import { useQuery } from 'react-query'
 
 function usePrevious<T>(value: T) {
   const ref = useRef<T>()
@@ -12,6 +13,7 @@ function usePrevious<T>(value: T) {
 
 export const Container = styled(animated.div)`
   will-change: background-color;
+  text-align: justify;
   width: 100%;
   height: 100%;
   margin: 0;
@@ -52,6 +54,29 @@ export const Content = styled(animated.div)`
   padding: 0px 0px 0px 14px;
   border-left: 1px dashed rgba(255, 255, 255, 0.4);
   overflow: hidden;
+  margin-bottom: 1rem;
+`
+
+export const ContentText = styled('div')`
+  position: relative;
+  top: 1rem;
+  display: block;
+  word-wrap: break-word;
+  width: 250px;
+  white-space: normal;
+
+  & > div {
+    margin-bottom: 1rem;
+  }
+`
+
+export const Price = styled('div')`
+  display: inline-flex;
+  & > div {
+    display: flex;
+    align-self: center;
+    margin-right: 10px;
+  }
 `
 
 export const toggle = {
@@ -83,8 +108,6 @@ const Tree = React.memo<React.HTMLAttributes<HTMLDivElement> & TestProps>(
       },
     })
 
-    console.log(opening)
-
     // @ts-ignore
     const Icon =
       Icons[`${children ? (isOpen ? 'Minus' : 'Plus') : 'Close'}SquareO`]
@@ -95,7 +118,7 @@ const Tree = React.memo<React.HTMLAttributes<HTMLDivElement> & TestProps>(
           onClick={() => setOpen(!isOpen)}
         />
         <Title style={style} onClick={() => opening(!openStatus)}>
-          {name} - title
+          {name}
         </Title>
         <Content
           style={{
@@ -110,7 +133,25 @@ const Tree = React.memo<React.HTMLAttributes<HTMLDivElement> & TestProps>(
   }
 )
 
+type Person = {
+  title: {
+    rendered: string
+  }
+  content: {
+    rendered: string
+  }
+  featured_media_src_url: string
+  excerpt: {
+    rendered: string
+  }
+}
+
 const Wrapper = () => {
+  const { isLoading, error, data, isFetching } = useQuery('repoData', () =>
+    fetch(
+      'http://guayoyoapi.souminimal.com/wp-json/wp/v2/posts?categories=2'
+    ).then((res) => res.json())
+  )
   const [isOpen2, setOpen2] = useState(false)
 
   const { backgroundColor } = useSpring({
@@ -120,67 +161,63 @@ const Wrapper = () => {
     },
   })
 
+  console.log('data menuuuuu --->>', data)
+
   // @ts-ignore
   return (
     <Container style={{ backgroundColor }}>
-      <Tree openStatus={isOpen2} name="main" opening={setOpen2} defaultOpen>
-        <Tree openStatus={isOpen2} name="hello222222" opening={setOpen2} />
-        <Tree
-          openStatus={isOpen2}
-          name="subtree with children"
-          opening={setOpen2}
-        >
-          <Tree openStatus={isOpen2} name="hello" opening={setOpen2} />
-          <Tree
-            openStatus={isOpen2}
-            name="sub-subtree with children"
-            opening={setOpen2}
-          >
+      <Tree openStatus={isOpen2} name="Carta" opening={setOpen2} defaultOpen>
+        {!isLoading &&
+          data.map((item: Person, i: number) => (
             <Tree
+              key={i}
               openStatus={isOpen2}
-              name="child 1"
-              style={{ color: '#37ceff' }}
+              name={`${item.title.rendered}`}
               opening={setOpen2}
-            />
-            <Tree
-              openStatus={isOpen2}
-              name="child 2"
-              style={{ color: '#37ceff' }}
-              opening={setOpen2}
-            />
-            <Tree
-              openStatus={isOpen2}
-              name="child 3"
-              style={{ color: '#37ceff' }}
-              opening={setOpen2}
-            />
-            <Tree openStatus={isOpen2} name="custom content" opening={setOpen2}>
-              <div
-                style={{
-                  position: 'relative',
-                  width: '100%',
-                  height: 200,
-                  padding: 10,
-                }}
-              >
+            >
+              <ContentText
+                dangerouslySetInnerHTML={{ __html: item.content.rendered }}
+              />
+              <Price>
+                <div>Precio:</div>
                 <div
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    background: 'red',
-                    borderRadius: 5,
+                  dangerouslySetInnerHTML={{
+                    __html: item.excerpt.rendered,
                   }}
                 />
-              </div>
+              </Price>
+              {item.featured_media_src_url !== null && (
+                <Tree openStatus={isOpen2} name="Image" opening={setOpen2}>
+                  <div
+                    style={{
+                      position: 'relative',
+                      width: 250,
+                      height: 250,
+                      padding: 10,
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        backgroundImage: `url(${item.featured_media_src_url})`,
+                        backgroundPosition: 'center',
+                        backgroundSize: 'cover',
+                        backgroundRepeat: 'no-repeat',
+                        borderRadius: 5,
+                      }}
+                    />
+                  </div>
+                </Tree>
+              )}
             </Tree>
-          </Tree>
-          <Tree openStatus={isOpen2} name="hello" opening={setOpen2} />
-        </Tree>
-        <Tree openStatus={isOpen2} name="world" opening={setOpen2} />
+          ))}
+
         <Tree
           openStatus={isOpen2}
           name={<span>🙀 something something</span>}
           opening={setOpen2}
+          style={{ color: '#37ceff' }}
         />
       </Tree>
     </Container>
