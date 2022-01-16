@@ -1,7 +1,6 @@
 import React from 'react'
 import { useTrail, a } from '@react-spring/web'
 import styled from 'styled-components'
-import { Menu } from '../menu/Menu'
 
 const Block = styled(a.div)`
   position: absolute;
@@ -19,36 +18,31 @@ const Block = styled(a.div)`
   text-shadow: 0px 2px 40px #00000020, 0px 2px 5px #00000030;
   -webkit-user-select: none;
   user-select: none;
-  background-color: greenyellow;
+  background-color: black;
 `
 
-const CloseButton = styled.div`
-  position: absolute;
-  top: 0;
-`
-
-const SliderRight: React.FC<{
-  open: boolean
-  Index: number
-  setOpen: (state: boolean) => void
-}> = ({ open, Index, setOpen }) => {
-  //const items = React.Index.toArray(Index)
-  const trail = useTrail(1, {
+const SliderLeft: React.FC<{
+  openLeft: boolean
+  setOpenLeft: (state: boolean) => void
+}> = ({ openLeft, children, setOpenLeft }) => {
+  const items = React.Children.toArray(children)
+  const trail = useTrail(items.length, {
     config: { mass: 5, tension: 2000, friction: 200 },
-    opacity: !open ? 1 : 0,
-    x: !open ? 0 : 2000,
+    opacity: !openLeft ? 1 : 0,
+    x: !openLeft ? 0 : -2000,
     from: { opacity: 0, x: -2000 },
   })
   return (
     <>
       {trail.map(({ ...style }, index) => (
         <Block key={index} style={style}>
-          <CloseButton onClick={() => setOpen(!open)}>X</CloseButton>
-          <Menu />
+          <a.div>{children}</a.div>
+          {''}
+          <div onClick={() => setOpenLeft(!openLeft)}>X</div>
         </Block>
       ))}
     </>
   )
 }
 
-export default SliderRight
+export default SliderLeft

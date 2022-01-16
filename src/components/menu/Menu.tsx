@@ -28,6 +28,7 @@ export const Container = styled(animated.div)`
   min-height: 100%;
   justify-content: center;
   overflow: auto;
+  align-items: center;
 `
 
 export const Frame = styled('div')`
