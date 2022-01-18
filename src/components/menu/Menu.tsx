@@ -18,7 +18,7 @@ export const Container = styled(animated.div)`
   height: 100%;
   margin: 0;
   padding: 0;
-  background: #282c34;
+  background: #000000;
   overflow: hidden;
   font-family: ui-monospace, monospace;
   font-size: 14px;
@@ -29,8 +29,8 @@ export const Container = styled(animated.div)`
   align-items: flex-start;
   min-height: 100%;
   justify-content: center;
-  overflow: auto;
   align-items: center;
+  overflow: scroll;
 `
 
 export const Frame = styled('div')`
@@ -38,7 +38,6 @@ export const Frame = styled('div')`
   padding: 20px 0px 0px 0px;
   text-overflow: ellipsis;
   white-space: nowrap;
-  overflow-x: hidden;
   vertical-align: middle;
   color: #fff;
   fill: #fff;
@@ -53,7 +52,6 @@ export const Content = styled(animated.div)`
   margin-left: 6px;
   padding: 0px 0px 0px 14px;
   border-left: 1px dashed rgba(255, 255, 255, 0.4);
-  overflow: hidden;
   margin-bottom: 1rem;
 `
 
@@ -155,9 +153,9 @@ const Wrapper = () => {
   const [isOpen2, setOpen2] = useState(false)
 
   const { backgroundColor } = useSpring({
-    from: { backgroundColor: '#282c34' },
+    from: { backgroundColor: '#000000' },
     to: {
-      backgroundColor: isOpen2 ? 'red' : '#282c34',
+      backgroundColor: isOpen2 ? 'red' : '#000000',
     },
   })
 
@@ -187,7 +185,7 @@ const Wrapper = () => {
                 />
               </Price>
               {item.featured_media_src_url !== null && (
-                <Tree openStatus={isOpen2} name="Image" opening={setOpen2}>
+                <Tree openStatus={isOpen2} name="Foto" opening={setOpen2}>
                   <div
                     style={{
                       position: 'relative',

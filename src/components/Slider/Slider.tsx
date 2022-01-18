@@ -9,6 +9,7 @@ import styled from 'styled-components'
 import SliderRight from './SliderRight'
 import SliderLeft from './SliderLeft'
 import { useQuery } from 'react-query'
+import { ArrowSVG, ArrowLeft, ArrowDown } from './ArrowSVG'
 
 const MainContainer = styled('div')`
   display: grid;
@@ -29,12 +30,17 @@ const Container = styled('div')`
 `
 const Left = styled('div')`
   display: grid;
+  justify-content: center;
 `
 const Title = styled('div')`
   display: grid;
+  color: #ffc300;
 `
 const Right = styled('div')`
   display: grid;
+  justify-content: left;
+  bottom: 10rem;
+  position: relative;
 `
 const Arrow = styled('div')`
   display: grid;
@@ -81,7 +87,7 @@ const Slider = () => {
       <animated.div
         style={{
           ...style,
-          backgroundImage: `url(${process.env.PUBLIC_URL}/pizza.jpg)`,
+          backgroundImage: `url(http://guayoyoapi.souminimal.com/wp-content/uploads/2022/01/pizzaBW.png)`,
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
@@ -92,12 +98,20 @@ const Slider = () => {
       >
         <MainContainer>
           <Container>
-            <Left onClick={() => setOpenLeft((state) => !state)}>LEFT</Left>
-            <Title>TITLE</Title>
-            <Right onClick={() => setOpen((state) => !state)}>RIGHT</Right>
+            <Left onClick={() => setOpenLeft((state) => !state)}>
+              <ArrowLeft />
+            </Left>
+            <Title>
+              <h1>PRINCIPALES</h1>
+            </Title>
+            <Right onClick={() => setOpen((state) => !state)}>
+              <ArrowSVG />
+            </Right>
           </Container>
           <Arrow>
-            <div onClick={onClick}>ARROW</div>
+            <div onClick={onClick}>
+              <ArrowDown />
+            </div>
           </Arrow>
         </MainContainer>
       </animated.div>
@@ -106,7 +120,7 @@ const Slider = () => {
       <animated.div
         style={{
           ...style,
-          backgroundImage: `url(${process.env.PUBLIC_URL}/teques.jpg)`,
+          backgroundImage: `url(http://guayoyoapi.souminimal.com/wp-content/uploads/2022/01/tequesBW.png)`,
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
@@ -117,12 +131,20 @@ const Slider = () => {
       >
         <MainContainer>
           <Container>
-            <Left onClick={() => setOpenLeft((state) => !state)}>LEFT</Left>
-            <Title>TITLE</Title>
-            <Right onClick={() => setOpen((state) => !state)}>RIGHT</Right>
+            <Left onClick={() => setOpenLeft((state) => !state)}>
+              <ArrowLeft />
+            </Left>
+            <Title>
+              <h1>Title</h1>
+            </Title>
+            <Right onClick={() => setOpen((state) => !state)}>
+              <ArrowSVG />
+            </Right>
           </Container>
           <Arrow>
-            <div onClick={onClick}>ARROW</div>
+            <div onClick={onClick}>
+              <ArrowDown />
+            </div>
           </Arrow>
         </MainContainer>
       </animated.div>
@@ -131,7 +153,7 @@ const Slider = () => {
       <animated.div
         style={{
           ...style,
-          backgroundImage: `url(${process.env.PUBLIC_URL}/nachos.jpg)`,
+          backgroundImage: `url(http://guayoyoapi.souminimal.com/wp-content/uploads/2022/01/nachosBW.png)`,
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
@@ -142,12 +164,20 @@ const Slider = () => {
       >
         <MainContainer>
           <Container>
-            <Left onClick={() => setOpenLeft((state) => !state)}>LEFT</Left>
-            <Title>TITLE</Title>
-            <Right onClick={() => setOpen((state) => !state)}>RIGHT</Right>
+            <Left onClick={() => setOpenLeft((state) => !state)}>
+              <ArrowLeft />
+            </Left>
+            <Title>
+              <h1>Title</h1>
+            </Title>
+            <Right onClick={() => setOpen((state) => !state)}>
+              <ArrowSVG />
+            </Right>
           </Container>
           <Arrow>
-            <div onClick={onClick}>ARROW</div>
+            <div onClick={onClick}>
+              <ArrowDown />
+            </div>
           </Arrow>
         </MainContainer>
       </animated.div>

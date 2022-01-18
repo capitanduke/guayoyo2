@@ -24,7 +24,9 @@ const Block = styled(a.div)`
 
 const CloseButton = styled.div`
   position: absolute;
-  top: 0;
+  top: 1rem;
+  right: 2rem;
+  z-index: 99999;
 `
 
 const SliderRight: React.FC<{
@@ -36,8 +38,8 @@ const SliderRight: React.FC<{
   const trail = useTrail(1, {
     config: { mass: 5, tension: 2000, friction: 200 },
     opacity: !open ? 1 : 0,
-    x: !open ? 0 : 2000,
-    from: { opacity: 0, x: -2000 },
+    y: !open ? 0 : -1200,
+    from: { opacity: 0, y: 1200 },
   })
   return (
     <>
