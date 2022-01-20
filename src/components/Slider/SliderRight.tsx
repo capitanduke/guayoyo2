@@ -41,12 +41,13 @@ const SliderRight: React.FC<{
     y: !open ? 0 : -1200,
     from: { opacity: 0, y: 1200 },
   })
+
   return (
     <>
       {trail.map(({ ...style }, index) => (
         <Block key={index} style={style}>
           <CloseButton onClick={() => setOpen(!open)}>X</CloseButton>
-          <Menu />
+          <Menu index={Index === 0 ? 2 : Index === 1 ? 4 : 3} />
         </Block>
       ))}
     </>

@@ -52,13 +52,19 @@ const Arrow = styled('div')`
   }
 `
 
+interface StylingTypes {
+  style: {
+    opacity: number
+    transform: string
+  }
+}
+
 const Slider = () => {
   const { isLoading, error, data, isFetching } = useQuery('repoData', () =>
-    fetch('http://guayoyoapi.souminimal.com/wp-json/wp/v2/posts').then((res) =>
+    fetch('http://guayoyoapi.souminimal.com/wp-json/wp/v2/pages').then((res) =>
       res.json()
     )
   )
-  console.log(data)
   const [index, set] = useState(0)
   const [open, setOpen] = useState(true)
   const [openLeft, setOpenLeft] = useState(true)
@@ -80,116 +86,55 @@ const Slider = () => {
     transRef.start()
   }, [index])
 
-  const pages: ((
-    props: AnimatedProps<{ style: CSSProperties }>
-  ) => React.ReactElement)[] = [
-    ({ style }) => (
-      <animated.div
-        style={{
-          ...style,
-          backgroundImage: `url(http://guayoyoapi.souminimal.com/wp-content/uploads/2022/01/pizzaBW.png)`,
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'cover',
-          position: 'absolute',
-          width: '100%',
-          height: '100%',
-        }}
-      >
-        <MainContainer>
-          <Container>
-            <Left onClick={() => setOpenLeft((state) => !state)}>
-              <ArrowLeft />
-            </Left>
-            <Title>
-              <h1>PRINCIPALES</h1>
-            </Title>
-            <Right onClick={() => setOpen((state) => !state)}>
-              <ArrowSVG />
-            </Right>
-          </Container>
-          <Arrow>
-            <div onClick={onClick}>
-              <ArrowDown />
-            </div>
-          </Arrow>
-        </MainContainer>
-      </animated.div>
-    ),
-    ({ style }) => (
-      <animated.div
-        style={{
-          ...style,
-          backgroundImage: `url(http://guayoyoapi.souminimal.com/wp-content/uploads/2022/01/tequesBW.png)`,
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'cover',
-          position: 'absolute',
-          width: '100%',
-          height: '100%',
-        }}
-      >
-        <MainContainer>
-          <Container>
-            <Left onClick={() => setOpenLeft((state) => !state)}>
-              <ArrowLeft />
-            </Left>
-            <Title>
-              <h1>Title</h1>
-            </Title>
-            <Right onClick={() => setOpen((state) => !state)}>
-              <ArrowSVG />
-            </Right>
-          </Container>
-          <Arrow>
-            <div onClick={onClick}>
-              <ArrowDown />
-            </div>
-          </Arrow>
-        </MainContainer>
-      </animated.div>
-    ),
-    ({ style }) => (
-      <animated.div
-        style={{
-          ...style,
-          backgroundImage: `url(http://guayoyoapi.souminimal.com/wp-content/uploads/2022/01/nachosBW.png)`,
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'cover',
-          position: 'absolute',
-          width: '100%',
-          height: '100%',
-        }}
-      >
-        <MainContainer>
-          <Container>
-            <Left onClick={() => setOpenLeft((state) => !state)}>
-              <ArrowLeft />
-            </Left>
-            <Title>
-              <h1>Title</h1>
-            </Title>
-            <Right onClick={() => setOpen((state) => !state)}>
-              <ArrowSVG />
-            </Right>
-          </Container>
-          <Arrow>
-            <div onClick={onClick}>
-              <ArrowDown />
-            </div>
-          </Arrow>
-        </MainContainer>
-      </animated.div>
-    ),
-  ]
+  const [titles, setTitles] = useState<React.ReactElement[]>([])
+  const [images, setImages] = useState<React.ReactElement[]>([])
+
+  useEffect(() => {
+    !isLoading &&
+      data.map((item: any) => {
+        setTitles((currentArray) => [...currentArray, item.title.rendered])
+        setImages((currentArray) => [
+          ...currentArray,
+          item.featured_media_src_url,
+        ])
+      })
+  }, [!isLoading])
 
   return (
     <>
-      {transitions((style, i) => {
-        const Page = pages[i]
-        return <Page style={style} />
-      })}
+      {transitions((style, i) => (
+        <animated.div
+          style={{
+            ...style,
+            backgroundImage: `url(${images[i]})`,
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+          }}
+        >
+          <MainContainer>
+            <Container>
+              <Left onClick={() => setOpenLeft((state) => !state)}>
+                <ArrowLeft />
+              </Left>
+              <Title>
+                <h1>{titles[i]}</h1>
+              </Title>
+              <Right onClick={() => setOpen((state) => !state)}>
+                <ArrowSVG />
+              </Right>
+            </Container>
+            <Arrow>
+              <div onClick={onClick}>
+                <ArrowDown />
+              </div>
+            </Arrow>
+          </MainContainer>
+        </animated.div>
+      ))}
       <SliderRight Index={index} open={open} setOpen={setOpen} />
       <SliderLeft openLeft={openLeft} setOpenLeft={setOpenLeft}>
         {index}

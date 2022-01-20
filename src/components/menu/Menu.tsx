@@ -144,11 +144,16 @@ type Person = {
   }
 }
 
-const Wrapper = () => {
-  const { isLoading, error, data, isFetching } = useQuery('repoData', () =>
-    fetch(
-      'http://guayoyoapi.souminimal.com/wp-json/wp/v2/posts?categories=2'
-    ).then((res) => res.json())
+const Wrapper: React.FC<{
+  index: number
+}> = ({ index }) => {
+  const [finalIndex, setFinalIndex] = useState(2)
+  const { isLoading, error, data, isFetching } = useQuery(
+    ['posts', finalIndex],
+    () =>
+      fetch(
+        `http://guayoyoapi.souminimal.com/wp-json/wp/v2/posts?categories=${finalIndex}`
+      ).then((res) => res.json())
   )
   const [isOpen2, setOpen2] = useState(false)
 
@@ -159,7 +164,9 @@ const Wrapper = () => {
     },
   })
 
-  console.log('data menuuuuu --->>', data)
+  useEffect(() => {
+    setFinalIndex(index)
+  }, [index])
 
   // @ts-ignore
   return (
@@ -222,6 +229,8 @@ const Wrapper = () => {
   )
 }
 
-export const Menu: any = () => {
-  return <Wrapper />
+export const Menu: React.FC<{
+  index: number
+}> = ({ index }) => {
+  return <Wrapper index={index} />
 }
