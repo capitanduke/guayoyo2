@@ -24,28 +24,40 @@ const MainContainer = styled('div')`
   user-select: none;
 `
 const Container = styled('div')`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  align-items: end;
+  display: flex;
+  flex-direction: column;
 `
 const Left = styled('div')`
-  display: grid;
+  display: flex;
+`
+const ContainerTitle = styled('div')`
+  display: flex;
+  align-items: start;
   justify-content: center;
+  height: 100%;
 `
-const Title = styled('div')`
-  display: grid;
+
+const UpperTitle = styled('h1')`
+  font-size: 6rem;
   color: #ffc300;
+  font-weight: 900;
+
+  @media screen and (max-width: 480px) {
+    font-size: 4rem;
+  }
 `
+
 const Right = styled('div')`
-  display: grid;
-  justify-content: left;
-  bottom: 10rem;
+  display: flex;
+  justify-content: end;
   position: relative;
+  top: 5rem;
+  right: 2rem;
 `
 const Arrow = styled('div')`
-  display: grid;
+  display: flex;
   justify-content: center;
-  align-content: center;
+  align-items: center;
 
   & > div {
     cursor: pointer;
@@ -120,12 +132,12 @@ const Slider = () => {
               <Left onClick={() => setOpenLeft((state) => !state)}>
                 <ArrowLeft />
               </Left>
-              <Title>
-                <h1>{titles[i]}</h1>
-              </Title>
               <Right onClick={() => setOpen((state) => !state)}>
                 <ArrowSVG />
               </Right>
+              <ContainerTitle>
+                <UpperTitle>{titles[i]}</UpperTitle>
+              </ContainerTitle>
             </Container>
             <Arrow>
               <div onClick={onClick}>

@@ -8,6 +8,7 @@ interface Props {
     marginRight?: number
     cursor?: string
     verticalAlign?: string
+    color?: string
   }
 }
 
@@ -20,13 +21,13 @@ const ArrowSVG: React.FC<Props> = (props) => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <line x1="75" x2="75" y2="185" stroke="black" strokeWidth="14" />
+    <line x1="75" x2="75" y2="185" stroke="#ffc300" strokeWidth="14" />
     <line
       x1="185.504"
       y1="94.3127"
       x2="0.504253"
       y2="94.6873"
-      stroke="black"
+      stroke="#ffc300"
       strokeWidth="14"
     />
   </svg>
@@ -47,7 +48,7 @@ const ArrowLeft: React.FC<Props> = (props) => (
       x2="130.702"
       y2="2.4781"
       stroke="black"
-      strokeWidth="14"
+      strokeWidth="8"
     />
     <line
       x1="0.522361"
@@ -55,7 +56,7 @@ const ArrowLeft: React.FC<Props> = (props) => (
       x2="185.514"
       y2="84.3526"
       stroke="black"
-      strokeWidth="14"
+      strokeWidth="8"
     />
     <line
       x1="16.3707"
@@ -63,7 +64,7 @@ const ArrowLeft: React.FC<Props> = (props) => (
       x2="186.371"
       y2="243.544"
       stroke="black"
-      strokeWidth="14"
+      strokeWidth="8"
     />
   </svg>
 )

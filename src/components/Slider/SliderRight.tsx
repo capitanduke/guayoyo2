@@ -2,6 +2,7 @@ import React from 'react'
 import { useTrail, a } from '@react-spring/web'
 import styled from 'styled-components'
 import { Menu } from '../menu/Menu'
+import { ArrowSVG } from './ArrowSVG'
 
 const Block = styled(a.div)`
   position: absolute;
@@ -46,7 +47,9 @@ const SliderRight: React.FC<{
     <>
       {trail.map(({ ...style }, index) => (
         <Block key={index} style={style}>
-          <CloseButton onClick={() => setOpen(!open)}>X</CloseButton>
+          <CloseButton onClick={() => setOpen(!open)}>
+            <ArrowSVG />
+          </CloseButton>
           <Menu index={Index === 0 ? 2 : Index === 1 ? 4 : 3} />
         </Block>
       ))}
