@@ -2,12 +2,16 @@ import React from 'react'
 import { useTrail, a } from '@react-spring/web'
 import styled from 'styled-components'
 import { useQuery } from 'react-query'
-import { ArrowLeft } from './ArrowSVG'
+import { ArrowLeft, Frame } from './ArrowSVG'
 
 const Container = styled('div')`
   display: grid;
-  grid-template-rows: 250px 1fr;
+  grid-template-rows: 200px 1fr 100px;
   width: 100%;
+
+  @media screen and (max-width: 480px) {
+    grid-template-rows: 150px 1fr;
+  }
 `
 
 const Block = styled(a.div)`
@@ -72,6 +76,33 @@ const Text = styled('div')`
   }
 `
 
+const InnerContainer = styled('div')`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  @media screen and (max-width: 480px) {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  & > a > h1 {
+    margin: 0;
+    font-weight: 700;
+  }
+`
+
+const Link = styled('a')`
+  display: flex;
+  justify-content: center;
+
+  @media screen and (max-width: 480px) {
+    display: flex;
+    justify-content: center;
+  }
+`
+
 const Map = styled('div')`
   display: flex;
   align-self: center;
@@ -80,16 +111,30 @@ const Map = styled('div')`
 
   @media screen and (max-width: 480px) {
     width: 20rem;
-    height: 100%;
+    height: 20rem;
   }
 `
 
 const Address = styled('div')`
   position: relative;
-  top: -6rem;
 
   @media screen and (max-width: 480px) {
-    top: -4rem;
+  }
+`
+
+const Tagline = styled('div')`
+  display: flex;
+  width: 100%;
+  background-color: #000000;
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+  height: 4rem;
+  position: absolute;
+  bottom: 0;
+
+  @media screen and (max-width: 480px) {
+    height: 2rem;
   }
 `
 
@@ -146,23 +191,47 @@ const SliderLeft: React.FC<{
                         }}
                       />
                     </ContainerText>
-                    <Map
-                      style={{
-                        backgroundImage: `url(${item.featured_media_src_url})`,
-                        backgroundPosition: 'center',
-                        backgroundRepeat: 'no-repeat',
-                        backgroundSize: 'contain',
-                      }}
-                    />
+                    <Link
+                      href="https://www.google.com/maps/place/Guayoyo/@41.4035428,2.1362907,15z/data=!4m2!3m1!1s0x0:0xfd6bb89a33744458?sa=X&ved=2ahUKEwiHloH9pMj1AhV5if0HHUpkAlwQ_BJ6BAgjEAU"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <Map
+                        style={{
+                          backgroundImage: `url(${item.featured_media_src_url})`,
+                          backgroundPosition: 'center',
+                          backgroundRepeat: 'no-repeat',
+                          backgroundSize: 'contain',
+                        }}
+                      >
+                        <Frame />
+                      </Map>
+                    </Link>
                     <Address
                       dangerouslySetInnerHTML={{
                         __html: item.excerpt.rendered,
                       }}
                     />
-                    <div>X</div>
+                    <InnerContainer>
+                      <a
+                        href="https://www.instagram.com/guayoyobarcelona/?hl=es"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <h1>INSTAGRAM</h1>
+                      </a>
+                      <a
+                        href="https://www.thefork.es/restaurante/guayoyo-r296109"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <h1>EL TENEDOR</h1>
+                      </a>
+                    </InnerContainer>
                   </>
                 ))}
             </Content>
+            <Tagline>HELLO</Tagline>
           </Container>
         </Block>
       ))}

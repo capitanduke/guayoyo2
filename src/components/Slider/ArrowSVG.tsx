@@ -114,4 +114,49 @@ const ArrowDown: React.FC<Props> = (props) => (
   </svg>
 )
 
-export { ArrowSVG, ArrowLeft, ArrowDown }
+const Frame: React.FC<Props> = (props) => (
+  <svg
+    {...props}
+    width="100%"
+    height="100%"
+    viewBox="0 0 452 343"
+    preserveAspectRatio="none"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <line
+      x1="2.5"
+      y1="45"
+      x2="2.49408"
+      y2="343"
+      stroke="#FFC300"
+      stroke-width="3"
+    />
+    <line
+      x1="54"
+      y1="1.5"
+      x2="449"
+      y2="1.5"
+      stroke="#FFC300"
+      stroke-width="3"
+    />
+    <line
+      x1="1"
+      y1="341.5"
+      x2="438"
+      y2="341.5"
+      stroke="#FFC300"
+      stroke-width="3"
+    />
+    <line
+      x1="450.5"
+      y1="3"
+      x2="450.5"
+      y2="253"
+      stroke="#FFC300"
+      stroke-width="3"
+    />
+  </svg>
+)
+
+export { ArrowSVG, ArrowLeft, ArrowDown, Frame }
