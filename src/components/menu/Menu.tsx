@@ -146,7 +146,8 @@ type Person = {
 
 const Wrapper: React.FC<{
   index: number
-}> = ({ index }) => {
+  title: string | undefined
+}> = ({ index, title }) => {
   const [finalIndex, setFinalIndex] = useState(2)
   const { isLoading, error, data, isFetching } = useQuery(
     ['posts', finalIndex],
@@ -171,7 +172,12 @@ const Wrapper: React.FC<{
   // @ts-ignore
   return (
     <Container style={{ backgroundColor }}>
-      <Tree openStatus={isOpen2} name="Carta" opening={setOpen2} defaultOpen>
+      <Tree
+        openStatus={isOpen2}
+        name={`${title}`}
+        opening={setOpen2}
+        defaultOpen
+      >
         {!isLoading &&
           data.map((item: Person, i: number) => (
             <Tree
@@ -218,12 +224,12 @@ const Wrapper: React.FC<{
             </Tree>
           ))}
 
-        <Tree
+        {/* <Tree
           openStatus={isOpen2}
           name={<span>🙀 something something</span>}
           opening={setOpen2}
           style={{ color: '#37ceff' }}
-        />
+        /> */}
       </Tree>
     </Container>
   )
@@ -231,6 +237,7 @@ const Wrapper: React.FC<{
 
 export const Menu: React.FC<{
   index: number
-}> = ({ index }) => {
-  return <Wrapper index={index} />
+  title: string | undefined
+}> = ({ index, title }) => {
+  return <Wrapper index={index} title={title} />
 }

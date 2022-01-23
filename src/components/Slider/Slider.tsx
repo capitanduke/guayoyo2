@@ -82,7 +82,7 @@ const Slider = () => {
   const [openLeft, setOpenLeft] = useState(true)
 
   const onClick = useCallback(() => {
-    set((state) => (state + 1) % 3)
+    set((state) => (state + 1) % 4)
   }, [])
 
   const transRef = useSpringRef()
@@ -98,8 +98,8 @@ const Slider = () => {
     transRef.start()
   }, [index])
 
-  const [titles, setTitles] = useState<React.ReactElement[]>([])
-  const [images, setImages] = useState<React.ReactElement[]>([])
+  const [titles, setTitles] = useState<string[]>([])
+  const [images, setImages] = useState<string[]>([])
 
   useEffect(() => {
     !isLoading &&
@@ -111,6 +111,13 @@ const Slider = () => {
         ])
       })
   }, [!isLoading])
+
+  const [title, setTitle] = useState<string>()
+
+  const OpenMenu = (i: number) => {
+    setTitle(titles[i])
+    setOpen((state) => !state)
+  }
 
   return (
     <>
@@ -132,7 +139,7 @@ const Slider = () => {
               <Left onClick={() => setOpenLeft((state) => !state)}>
                 <ArrowLeft />
               </Left>
-              <Right onClick={() => setOpen((state) => !state)}>
+              <Right onClick={() => OpenMenu(i)}>
                 <ArrowSVG />
               </Right>
               <ContainerTitle>
@@ -147,7 +154,7 @@ const Slider = () => {
           </MainContainer>
         </animated.div>
       ))}
-      <SliderRight Index={index} open={open} setOpen={setOpen} />
+      <SliderRight Index={index} open={open} setOpen={setOpen} title={title} />
       <SliderLeft openLeft={openLeft} setOpenLeft={setOpenLeft}>
         {index}
       </SliderLeft>

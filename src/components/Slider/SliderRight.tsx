@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTrail, a } from '@react-spring/web'
 import styled from 'styled-components'
 import { Menu } from '../menu/Menu'
@@ -33,8 +33,9 @@ const CloseButton = styled.div`
 const SliderRight: React.FC<{
   open: boolean
   Index: number
+  title: string | undefined
   setOpen: (state: boolean) => void
-}> = ({ open, Index, setOpen }) => {
+}> = ({ open, Index, setOpen, title }) => {
   //const items = React.Index.toArray(Index)
   const trail = useTrail(1, {
     config: { mass: 5, tension: 2000, friction: 200 },
@@ -43,6 +44,20 @@ const SliderRight: React.FC<{
     from: { opacity: 0, y: 1200 },
   })
 
+  const [finalIndex, setFinalIndex] = useState(2)
+
+  useEffect(() => {
+    if (Index === 0) {
+      setFinalIndex(2)
+    } else if (Index === 1) {
+      setFinalIndex(5)
+    } else if (Index === 2) {
+      setFinalIndex(3)
+    } else {
+      setFinalIndex(6)
+    }
+  }, [Index])
+
   return (
     <>
       {trail.map(({ ...style }, index) => (
@@ -50,7 +65,7 @@ const SliderRight: React.FC<{
           <CloseButton onClick={() => setOpen(!open)}>
             <ArrowSVG />
           </CloseButton>
-          <Menu index={Index === 0 ? 2 : Index === 1 ? 4 : 3} />
+          <Menu index={finalIndex} title={title} />
         </Block>
       ))}
     </>

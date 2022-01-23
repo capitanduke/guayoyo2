@@ -154,7 +154,7 @@ const SliderLeft: React.FC<{
     x: !openLeft ? 0 : -2000,
     from: { opacity: 0, x: 0 },
   })
-  console.log(data)
+
   return (
     <>
       {trail.map(({ ...style }, index) => (

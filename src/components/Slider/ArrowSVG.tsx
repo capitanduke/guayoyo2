@@ -130,23 +130,16 @@ const Frame: React.FC<Props> = (props) => (
       x2="2.49408"
       y2="343"
       stroke="#FFC300"
-      stroke-width="3"
+      strokeWidth="3"
     />
-    <line
-      x1="54"
-      y1="1.5"
-      x2="449"
-      y2="1.5"
-      stroke="#FFC300"
-      stroke-width="3"
-    />
+    <line x1="54" y1="1.5" x2="449" y2="1.5" stroke="#FFC300" strokeWidth="3" />
     <line
       x1="1"
       y1="341.5"
       x2="438"
       y2="341.5"
       stroke="#FFC300"
-      stroke-width="3"
+      strokeWidth="3"
     />
     <line
       x1="450.5"
@@ -154,7 +147,7 @@ const Frame: React.FC<Props> = (props) => (
       x2="450.5"
       y2="253"
       stroke="#FFC300"
-      stroke-width="3"
+      strokeWidth="3"
     />
   </svg>
 )
