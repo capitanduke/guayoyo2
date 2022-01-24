@@ -2,17 +2,7 @@ import React from 'react'
 import { useTrail, a } from '@react-spring/web'
 import styled from 'styled-components'
 import { useQuery } from 'react-query'
-import { ArrowLeft, Frame } from './ArrowSVG'
-
-const Container = styled('div')`
-  display: grid;
-  grid-template-rows: 200px 1fr 100px;
-  width: 100%;
-
-  @media screen and (max-width: 480px) {
-    grid-template-rows: 150px 1fr;
-  }
-`
+import { ArrowLeft, Frame, Heart } from './ArrowSVG'
 
 const Block = styled(a.div)`
   position: absolute;
@@ -24,6 +14,16 @@ const Block = styled(a.div)`
   -webkit-user-select: none;
   user-select: none;
   background-color: #ffffff;
+`
+
+const Container = styled('div')`
+  display: grid;
+  grid-template-rows: 200px 1fr 100px;
+  width: 100%;
+
+  @media screen and (max-width: 480px) {
+    grid-template-rows: 150px 1fr 100px;
+  }
 `
 
 const HeaderContainer = styled('div')`
@@ -129,12 +129,14 @@ const Tagline = styled('div')`
   color: #fff;
   justify-content: center;
   align-items: center;
-  height: 4rem;
-  position: absolute;
-  bottom: 0;
+  margin-top: 4rem;
+
+  & > p > span {
+    color: #ffc300;
+  }
 
   @media screen and (max-width: 480px) {
-    height: 2rem;
+    margin-top: 2rem;
   }
 `
 
@@ -180,58 +182,68 @@ const SliderLeft: React.FC<{
                 <ArrowLeft />
               </Back>
             </HeaderContainer>
-            <Content>
-              {!isLoading &&
-                data.map((item: any, i: number) => (
-                  <>
-                    <ContainerText>
-                      <Text
-                        dangerouslySetInnerHTML={{
-                          __html: item.content.rendered,
-                        }}
-                      />
-                    </ContainerText>
-                    <Link
-                      href="https://www.google.com/maps/place/Guayoyo/@41.4035428,2.1362907,15z/data=!4m2!3m1!1s0x0:0xfd6bb89a33744458?sa=X&ved=2ahUKEwiHloH9pMj1AhV5if0HHUpkAlwQ_BJ6BAgjEAU"
+            {!isLoading &&
+              data.map((item: any, i: number) => (
+                <Content>
+                  <ContainerText>
+                    <Text
+                      dangerouslySetInnerHTML={{
+                        __html: item.content.rendered,
+                      }}
+                    />
+                  </ContainerText>
+                  <Link
+                    href="https://www.google.com/maps/place/Guayoyo/@41.4035428,2.1362907,15z/data=!4m2!3m1!1s0x0:0xfd6bb89a33744458?sa=X&ved=2ahUKEwiHloH9pMj1AhV5if0HHUpkAlwQ_BJ6BAgjEAU"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <Map
+                      style={{
+                        backgroundImage: `url(${item.featured_media_src_url})`,
+                        backgroundPosition: 'center',
+                        backgroundRepeat: 'no-repeat',
+                        backgroundSize: 'contain',
+                      }}
+                    >
+                      <Frame />
+                    </Map>
+                  </Link>
+                  <Address
+                    dangerouslySetInnerHTML={{
+                      __html: item.excerpt.rendered,
+                    }}
+                  />
+                  <InnerContainer>
+                    <a
+                      href="https://www.instagram.com/guayoyobarcelona/?hl=es"
                       target="_blank"
                       rel="noreferrer"
                     >
-                      <Map
-                        style={{
-                          backgroundImage: `url(${item.featured_media_src_url})`,
-                          backgroundPosition: 'center',
-                          backgroundRepeat: 'no-repeat',
-                          backgroundSize: 'contain',
-                        }}
-                      >
-                        <Frame />
-                      </Map>
-                    </Link>
-                    <Address
-                      dangerouslySetInnerHTML={{
-                        __html: item.excerpt.rendered,
-                      }}
-                    />
-                    <InnerContainer>
-                      <a
-                        href="https://www.instagram.com/guayoyobarcelona/?hl=es"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        <h1>INSTAGRAM</h1>
-                      </a>
-                      <a
-                        href="https://www.thefork.es/restaurante/guayoyo-r296109"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        <h1>EL TENEDOR</h1>
-                      </a>
-                    </InnerContainer>
-                  </>
-                ))}
-            </Content>
-            <Tagline>HELLO</Tagline>
+                      <h1>INSTAGRAM</h1>
+                    </a>
+                    <a
+                      href="https://www.thefork.es/restaurante/guayoyo-r296109"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <h1>EL TENEDOR</h1>
+                    </a>
+                  </InnerContainer>
+                </Content>
+              ))}
+            <Tagline>
+              <p>
+                Built with React/TypeScript
+                <span>Raul Rincones</span>
+                <a
+                  href="https://github.com/capitanduke"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {''} <Heart />
+                </a>
+              </p>
+            </Tagline>
           </Container>
         </Block>
       ))}

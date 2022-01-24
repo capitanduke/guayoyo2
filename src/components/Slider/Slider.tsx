@@ -48,7 +48,9 @@ const UpperTitle = styled('h1')`
 `
 
 const Right = styled('div')`
+  display: -webkit-flex;
   display: flex;
+  -webkit-justify-content: end;
   justify-content: end;
   position: relative;
   top: 5rem;
@@ -132,6 +134,7 @@ const Slider = () => {
             position: 'absolute',
             width: '100%',
             height: '100%',
+            overflow: 'none',
           }}
         >
           <MainContainer>

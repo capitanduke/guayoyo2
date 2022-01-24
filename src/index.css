@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap');
 
 ::-webkit-scrollbar {
   width: 0px;
@@ -17,6 +18,10 @@ body {
 h1 {
   font-family: 'Abril Fatface', cursive;
   font-weight: 400;
+}
+
+p {
+  font-family: 'IBM Plex Sans', sans-serif;
 }
 
 a {
